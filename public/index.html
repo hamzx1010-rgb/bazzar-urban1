@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bazzar Urban - متجر الملابس الحضرية</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; color: #333; }
+        
+        /* HEADER */
+        header { background: white; padding: 1.2rem 1rem; border-bottom: 2px solid #d32f2f; position: sticky; top: 0; z-index: 100; }
+        .header-wrapper { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 700; color: #1a1a1a; display: flex; align-items: center; gap: 0.8rem; }
+        .logo-icon { width: 40px; height: 40px; background: #d32f2f; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; }
+        
+        /* HERO */
+        .hero { background: #1a1a1a; color: white; padding: 4rem 1rem; text-align: center; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        .hero-badge { display: inline-block; background: #d32f2f; padding: 0.8rem 1.6rem; border-radius: 6px; font-weight: 600; }
+        
+        /* MAIN */
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 1rem; }
+        
+        .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+        
+        .category-filter { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .category-btn { padding: 0.8rem 1.5rem; border: 2px solid #ddd; background: white; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .category-btn:hover { border-color: #d32f2f; color: #d32f2f; }
+        .category-btn.active { background: #d32f2f; color: white; border-color: #d32f2f; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.5rem; }
+        
+        .product-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s; cursor: pointer; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        
+        .product-image { width: 100%; aspect-ratio: 1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .discount-badge { position: absolute; top: 12px; right: 12px; background: #d32f2f; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4); }
+        
+        .product-info { padding: 1.2rem; }
+        .product-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; line-height: 1.4; }
+        .product-price { font-size: 1.3rem; font-weight: 700; color: #d32f2f; margin-bottom: 0.3rem; }
+        .product-old-price { font-size: 0.85rem; color: #999; text-decoration: line-through; }
+        
+        /* POPUP */
+        .popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+        .popup.show { display: flex; }
+        
+        .popup-content { background: white; border-radius: 12px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        
+        .popup-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 2px solid #d32f2f; }
+        .popup-title { font-size: 1.3rem; font-weight: 700; color: #1a1a1a; }
+        .popup-close { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #666; }
+        .popup-close:hover { color: #1a1a1a; }
+        
+        .popup-body { padding: 1.5rem; }
+        
+        .popup-image-container { width: 100%; border-radius: 8px; overflow: hidden; background: #f0f0f0; margin-bottom: 1.5rem; }
+        .popup-image-container img { width: 100%; max-height: 300px; object-fit: cover; }
+        
+        .popup-price-section { margin-bottom: 1.5rem; }
+        .popup-price { font-size: 1.8rem; font-weight: 700; color: #d32f2f; }
+        .popup-old-price { font-size: 0.95rem; color: #999; text-decoration: line-through; margin-top: 0.3rem; }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 0.6rem; color: #1a1a1a; }
+        .form-input { width: 100%; padding: 0.9rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; transition: all 0.3s; }
+        .form-input:focus { outline: none; border-color: #d32f2f; box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1); }
+        
+        .qty-control { display: flex; align-items: center; gap: 1rem; }
+        .qty-btn { width: 45px; height: 45px; border: 2px solid #ddd; background: white; cursor: pointer; border-radius: 6px; font-weight: 700; font-size: 1.2rem; transition: all 0.3s; }
+        .qty-btn:hover { border-color: #d32f2f; color: #d32f2f; }
+        .qty-display { font-size: 1.2rem; font-weight: 700; min-width: 40px; text-align: center; }
+        
+        .total-box { background: #f5f5f5; padding: 1.2rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.2rem; margin-bottom: 1.5rem; border-left: 4px solid #d32f2f; }
+        
+        .submit-btn { width: 100%; padding: 1.2rem; background: #d32f2f; color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; }
+        .submit-btn:hover { background: #b71c1c; transform: translateY(-2px); }
+        .submit-btn:active { transform: translateY(0); }
+        
+        .success-message { display: none; position: fixed; top: 2rem; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: white; padding: 1.5rem 2.5rem; border-radius: 6px; z-index: 2000; font-weight: 600; border-top: 4px solid #d32f2f; }
+        .success-message.show { display: block; }
+        
+        .no-products { text-align: center; padding: 3rem 1rem; color: #999; font-size: 1.1rem; }
+        
+        /* FOOTER */
+        footer { background: #1a1a1a; color: white; padding: 2rem 1rem; text-align: center; margin-top: 3rem; }
+        
+        @media (max-width: 768px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .section-title { font-size: 1.5rem; }
+            .popup-content { max-width: 90%; }
+        }
+    </style>
+</head>
+<body dir="rtl">
+
+<!-- HEADER -->
+<header>
+    <div class="header-wrapper">
+        <div class="logo">
+            <div class="logo-icon">B</div>
+            <span>Bazzar Urban</span>
+        </div>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>🛍️ منتجات عالية الجودة</h1>
+    <p>أحدث تصاميم الستريتويار بأفضل الأسعار</p>
+    <div class="hero-badge">🔥 خصومات حتى 50%</div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+    <div class="section-title">
+        <span style="font-size: 2rem;">❤️</span>
+        منتجاتنا المتميزة
+    </div>
+
+    <div class="category-filter" id="categoryFilter"></div>
+
+    <div class="products-grid" id="productsGrid"></div>
+    <div id="noProducts" class="no-products" style="display: none;">📭 لا توجد منتجات في هذا التصنيف</div>
+</div>
+
+<!-- PRODUCT POPUP -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <div class="popup-header">
+            <div class="popup-title" id="popupTitle"></div>
+            <button class="popup-close" onclick="closePopup()">✕</button>
+        </div>
+
+        <div class="popup-body">
+            <div class="popup-image-container" id="imageContainer"></div>
+
+            <div class="popup-price-section">
+                <div class="popup-price" id="popupPrice"></div>
+                <div class="popup-old-price" id="popupOldPrice"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">الاسم</label>
+                <input type="text" class="form-input" id="customerName" placeholder="أدخل اسمك الكامل">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">رقم الجوال</label>
+                <input type="tel" class="form-input" id="customerPhone" placeholder="مثال: 0790123456">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">العنوان</label>
+                <input type="text" class="form-input" id="customerAddress" placeholder="أدخل عنوانك كاملاً">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">الحجم</label>
+                <input type="text" class="form-input" id="productSize" placeholder="مثال: 43 أو XL أو M">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">الكمية</label>
+                <div class="qty-control">
+                    <button class="qty-btn" onclick="decreaseQty()">−</button>
+                    <div class="qty-display" id="qtyDisplay">1</div>
+                    <button class="qty-btn" onclick="increaseQty()">+</button>
+                </div>
+            </div>
+
+            <div class="total-box">
+                <span>الإجمالي:</span>
+                <span id="totalPrice">0 DZD</span>
+            </div>
+
+            <button class="submit-btn" onclick="submitOrder()">✅ تأكيد الطلب</button>
+        </div>
+    </div>
+</div>
+
+<!-- SUCCESS MESSAGE -->
+<div class="success-message" id="successMessage">
+    ✅ تم استقبال طلبك بنجاح! شكراً لاختيارك Bazzar Urban
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2024 Bazzar Urban. جميع الحقوق محفوظة 🛍️</p>
+</footer>
+
+<script>
+    let products = [];
+    let currentProduct = null;
+    let currentQty = 1;
+    let currentCategory = 'الكل';
+
+    async function loadProducts() {
+        try {
+            const res = await fetch('/api/products');
+            products = await res.json();
+            loadCategories();
+            displayProducts();
+        } catch (e) {
+            console.error('Error loading products:', e);
+        }
+    }
+
+    function loadCategories() {
+        const categories = ['الكل', ...new Set(products.map(p => p.category || 'بدون تصنيف'))];
+        let html = '';
+        categories.forEach(cat => {
+            html += `<button class="category-btn ${cat === 'الكل' ? 'active' : ''}" onclick="filterCategory('${cat}')">${cat}</button>`;
+        });
+        document.getElementById('categoryFilter').innerHTML = html;
+    }
+
+    function filterCategory(category) {
+        currentCategory = category;
+        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        displayProducts();
+    }
+
+    function displayProducts() {
+        let filtered = products;
+        if (currentCategory !== 'الكل') {
+            filtered = products.filter(p => (p.category || 'بدون تصنيف') === currentCategory);
+        }
+
+        if (filtered.length === 0) {
+            document.getElementById('productsGrid').innerHTML = '';
+            document.getElementById('noProducts').style.display = 'block';
+            return;
+        }
+
+        document.getElementById('noProducts').style.display = 'none';
+        let html = '';
+        filtered.forEach(p => {
+            const imageUrl = p.images && p.images[0] ? p.images[0] : null;
+            html += `
+                <div class="product-card" onclick="openPopup(${p.id})">
+                    <div class="product-image">
+                        ${imageUrl ? `<img src="${imageUrl}" alt="${p.name}">` : '📦'}
+                        ${p.discount > 0 ? `<div class="discount-badge">-${p.discount}%</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">${p.price} DZD</div>
+                        <div class="product-old-price">${p.old} DZD</div>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('productsGrid').innerHTML = html;
+    }
+
+    function openPopup(id) {
+        currentProduct = products.find(p => p.id === id);
+        currentQty = 1;
+
+        document.getElementById('popupTitle').textContent = currentProduct.name;
+        document.getElementById('popupPrice').textContent = currentProduct.price + ' DZD';
+        document.getElementById('popupOldPrice').textContent = currentProduct.old + ' DZD';
+        document.getElementById('qtyDisplay').textContent = '1';
+        document.getElementById('customerName').value = '';
+        document.getElementById('customerPhone').value = '';
+        document.getElementById('customerAddress').value = '';
+        document.getElementById('productSize').value = '';
+        updateTotal();
+
+        if (currentProduct.images && currentProduct.images[0]) {
+            document.getElementById('imageContainer').innerHTML = `<img src="${currentProduct.images[0]}" alt="${currentProduct.name}">`;
+        } else {
+            document.getElementById('imageContainer').innerHTML = '<div style="width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; font-size: 5rem; background: #f0f0f0;">📦</div>';
+        }
+
+        document.getElementById('popup').classList.add('show');
+    }
+
+    function closePopup() {
+        document.getElementById('popup').classList.remove('show');
+    }
+
+    function increaseQty() {
+        currentQty++;
+        document.getElementById('qtyDisplay').textContent = currentQty;
+        updateTotal();
+    }
+
+    function decreaseQty() {
+        if (currentQty > 1) {
+            currentQty--;
+            document.getElementById('qtyDisplay').textContent = currentQty;
+            updateTotal();
+        }
+    }
+
+    function updateTotal() {
+        const total = currentProduct.price * currentQty;
+        document.getElementById('totalPrice').textContent = total + ' DZD';
+    }
+
+    async function submitOrder() {
+        const name = document.getElementById('customerName').value.trim();
+        const phone = document.getElementById('customerPhone').value.trim();
+        const address = document.getElementById('customerAddress').value.trim();
+        const size = document.getElementById('productSize').value.trim();
+
+        if (!name || !phone || !address || !size) {
+            alert('⚠️ الرجاء ملء جميع الحقول');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    product: currentProduct.name,
+                    price: currentProduct.price * currentQty,
+                    size,
+                    qty: currentQty,
+                    customer: name,
+                    phone,
+                    address,
+                    date: new Date().toLocaleDateString('ar-DZ')
+                })
+            });
+
+            if (res.ok) {
+                document.getElementById('successMessage').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('successMessage').classList.remove('show');
+                }, 3000);
+                closePopup();
+            } else {
+                alert('❌ حدث خطأ في الطلب');
+            }
+        } catch (e) {
+            alert('❌ خطأ في الاتصال');
+            console.error(e);
+        }
+    }
+
+    loadProducts();
+
+    document.getElementById('popup').addEventListener('click', (e) => {
+        if (e.target.id === 'popup') closePopup();
+    });
+</script>
+
+</body>
+</html>
