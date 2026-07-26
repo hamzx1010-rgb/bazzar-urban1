@@ -1,0 +1,16 @@
+{
+  "name": "bazzar-urban",
+  "version": "1.0.0",
+  "description": "BAZZAR URBAN — streetwear store with hidden admin dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
