@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1001,
+    "name": "Hoodie Oversize Urbain",
+    "category": "Hoodies",
+    "price": 4500,
+    "old": 6000,
+    "discount": 25,
+    "featured": true,
+    "material": "100% Coton molletonné",
+    "fit": "Oversize",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "description": "Un hoodie ample en coton épais, pensé pour les journées fraîches. Capuche doublée, poche kangourou et finitions côtelées aux poignets.",
+    "order": 1,
+    "images": [
+      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&q=80"
+    ]
+  },
+  {
+    "id": 1002,
+    "name": "Pantalon Cargo Street",
+    "category": "Pants",
+    "price": 3800,
+    "old": 4800,
+    "discount": 20,
+    "featured": true,
+    "material": "Coton renforcé",
+    "fit": "Coupe droite",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "description": "Cargo aux lignes nettes avec poches latérales fonctionnelles. Tissu résistant, taille ajustable et tombé impeccable.",
+    "order": 2,
+    "images": [
+      "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=800&q=80"
+    ]
+  },
+  {
+    "id": 1003,
+    "name": "T-Shirt Graphique Boxy",
+    "category": "T-Shirts",
+    "price": 2200,
+    "old": 2900,
+    "discount": 24,
+    "featured": true,
+    "material": "Jersey de coton peigné",
+    "fit": "Boxy",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "description": "Coupe boxy moderne et imprimé exclusif. Coton doux, épaules tombantes et col renforcé pour tenir dans le temps.",
+    "order": 3,
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80"
+    ]
+  },
+  {
+    "id": 1004,
+    "name": "Sneakers Retro Runner",
+    "category": "Shoes",
+    "price": 7500,
+    "old": 9500,
+    "discount": 21,
+    "featured": true,
+    "material": "Cuir synthétique & mesh",
+    "fit": "Taille normale",
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44"
+    ],
+    "description": "Silhouette rétro et semelle amortissante. Un modèle polyvalent qui accompagne aussi bien le jean que le jogging.",
+    "order": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80"
+    ]
+  }
+]
